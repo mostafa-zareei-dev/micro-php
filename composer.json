@@ -1,0 +1,18 @@
+{
+  "name": "framework/micro-php",
+  "description": "micro php framework based on MVC architecture",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\Kernel\\": "src/",
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Mostafa Zareei",
+      "email": "mostafa.zareei.pub@gmail.com"
+    }
+  ],
+  "require": {}
+}
