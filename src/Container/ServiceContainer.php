@@ -5,6 +5,7 @@ namespace App\Kernel\Container;
 use Closure;
 use ReflectionClass;
 use ReflectionType;
+use App\Kernel\ServiceProviders\IServiceProvider;
 
 class ServiceContainer
 {
@@ -51,7 +52,7 @@ class ServiceContainer
         }
     }
 
-    public function register(mixed $provider)
+    public function register(IServiceProvider $provider)
     {
         $provider->register($this);
         $this->providers[] = $provider;
