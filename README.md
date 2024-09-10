@@ -20,7 +20,6 @@ The framework’s directory structure is as follows:
   /controllers        # Controllers handle HTTP requests
   /middlewares        # Middlewares for request processing
   /models             # Models interact with the database
-  /views              # Views render HTML output
 /config               # Configuration files
 /public               # Publicly accessible files (e.g., assets, index.php)
   /assets
@@ -37,6 +36,7 @@ The framework’s directory structure is as follows:
   /Models             # Base models and abstract classes
   /Views              # View rendering logic
 /vendor                 # Composer dependencies
+/views              # Views render HTML output
 ```
 
 ## Installation
