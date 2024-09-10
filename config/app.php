@@ -1,6 +1,9 @@
 <?php
 
 return [
-    'providers' => [],
+    'providers' => [
+        "App\Kernel\ServiceProviders\RouteServiceProvider",
+        "App\Kernel\ServiceProviders\HttpServiceProvider"
+    ],
     'middlewares' => [],
 ];
