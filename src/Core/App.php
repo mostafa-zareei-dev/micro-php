@@ -3,6 +3,8 @@
 namespace App\Kernel\Core;
 
 use App\Kernel\Container\ServiceContainer;
+use App\Kernel\Http\Request;
+use App\Kernel\Routing\Router;
 
 class App
 {
@@ -28,6 +30,14 @@ class App
     public static function resolve(string $key)
     {
         return self::$container->resolve($key);
+    }
+
+    public function handle()
+    {
+        $router = self::$container->resolve(Router::class);
+        $request = self::$container->resolve(Request::class);
+
+        $router->routing($request);
     }
 
     private function registerServiceProviders()
