@@ -8,6 +8,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        echo "Home Controller";
+        $this->view->render('home', [
+            'page_title' => 'Home Page',
+            'page_subject' => 'Home',
+        ]);
     }
 }
