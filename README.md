@@ -29,8 +29,9 @@ The framework’s directory structure is as follows:
 /src
   /Core               # Core components of the framework
   /Routing            # Routing logic
-  /DependencyInjection # DI Container implementation
+  /Container          # DI Container implementation
   /ServiceProviders   # Base ServiceProvider and abstract classes
+  /Http               # Base Http classes
   /Controllers        # Base controllers and abstract classes
   /Middlewares        # Base middlewares and abstract classes
   /Models             # Base models and abstract classes
