@@ -10,7 +10,6 @@ use App\Kernel\ServiceProviders\IServiceProvider;
 class ServiceContainer
 {
     private array $bindings = [];
-    private array $instances = [];
     private array $providers = [];
 
     public function bind(string $key, string $resolver): void
@@ -33,10 +32,6 @@ class ServiceContainer
 
     public function resolve(string $key)
     {
-        if (isset($this->instances[$key])) {
-            return $this->instances[$key];
-        }
-
         if (isset($this->bindings[$key])) {
             $resolver = $this->bindings[$key];
 
@@ -45,8 +40,6 @@ class ServiceContainer
             } else {
                 $object = $this->build($resolver);
             }
-
-            $this->instances[$key] = $object;
 
             return $object;
         }
@@ -86,7 +79,7 @@ class ServiceContainer
             $dependency = $parameter->getType();
 
             if ($dependency instanceof ReflectionType) {
-                $dependency[] = $this->resolve($dependency->getName());
+                $dependencies[] = $this->resolve($dependency->getName());
             } else {
                 throw new \Exception("Cannot resolve dependency {$parameter->name}");
             }
