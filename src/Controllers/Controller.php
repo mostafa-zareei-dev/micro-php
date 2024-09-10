@@ -2,6 +2,13 @@
 
 namespace App\Kernel\Controllers;
 
-abstract class Controller {
+use App\Kernel\Views\IView;
 
+abstract class Controller {
+    protected IView $view;
+
+    public function __construct(IView $view)
+    {
+        $this->view = $view;
+    }
 }
