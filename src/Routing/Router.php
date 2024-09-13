@@ -12,6 +12,8 @@ use Exception;
 class Router
 {
     private IRouteCollection $routeCollection;
+    private RouteMiddlewarePipline $routeMiddlewarePipline;
+    private RouteURI $currentRoute;
 
     const GET_METHOD = 'GET';
     const POST_METHOD = 'POST';
@@ -19,9 +21,10 @@ class Router
     const PUT_METHOD = 'PUT';
     const PATCH_METHOD = 'PATCH';
 
-    public function __construct(IRouteCollection $routeCollection)
+    public function __construct(IRouteCollection $routeCollection, RouteMiddlewarePipline $routeMiddlewarePipline)
     {
         $this->routeCollection = $routeCollection;
+        $this->routeMiddlewarePipline = $routeMiddlewarePipline;
     }
 
     public function get(string $uri, Closure | array | string $action): static
@@ -58,9 +61,16 @@ class Router
     {
 
         $route = App::resolve(RouteURI::class)->setMethod($method)->setUri($uri)->setAction($action);
+        $this->currentRoute = $route;
         $this->routeCollection->add(
             $route
         );
+    }
+
+    public function middleware(string | array $middleware): static
+    {
+        $this->routeCollection->addMiddleware($this->currentRoute, $middleware);
+        return $this;
     }
 
     public function routing(Request $request): void
@@ -75,10 +85,23 @@ class Router
             $this->abort();
         }
 
-        $this->dispatch($route);
+        $this->processRequest($request, $route);
     }
 
-    private function dispatch(RouteURI $route): void
+    private function processRequest(Request $request, RouteURI $route)
+    {
+        if (!empty($route->middlewares())) {
+            $this->routeMiddlewarePipline->build(
+                $route->middlewares()
+            )->handle($request, function ($request) use ($route) {
+                $this->dispatch($request, $route);
+            });
+        } else {
+            $this->dispatch($request, $route);
+        }
+    }
+
+    private function dispatch(Request $request, RouteURI $route): void
     {
         if (is_callable($route->action())) {
             call_user_func($route->action());

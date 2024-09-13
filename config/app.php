@@ -7,4 +7,7 @@ return [
         "App\Kernel\ServiceProviders\RouteServiceProvider",
     ],
     'middlewares' => [],
+    'route_middlewares' => [
+        "auth" => "App\Middlewares\AuthMiddleware",
+    ],
 ];
