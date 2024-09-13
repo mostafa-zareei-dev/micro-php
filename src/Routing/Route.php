@@ -9,7 +9,7 @@ class Route
 {
     private static array $methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTION'];
 
-    public static function __callStatic(string $method, array $args)
+    public static function __callStatic(string $method, array $args): Router
     {
         $method = strtoupper($method);
 
@@ -30,7 +30,7 @@ class Route
         $method = strtolower($method);
 
         $router = App::resolve(Router::class);
-        call_user_func([$router, $method], $uri, $action);
+        return call_user_func([$router, $method], $uri, $action);
     }
 
     private static function isInvalidMethod(string $method): bool
