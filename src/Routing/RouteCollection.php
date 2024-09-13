@@ -8,6 +8,7 @@ interface IRouteCollection
     public function update(RouteURI $route): void;
     public function filter(RouteURI $route): RouteURI | false;
     public function routes(): array;
+    public function addMiddleware(RouteURI $route, string | array $middleware): void;
 };
 
 class RouteCollection implements IRouteCollection
@@ -25,7 +26,7 @@ class RouteCollection implements IRouteCollection
     {
         $filteredRoute = array_filter(
             $this->routes,
-            fn($routeItem) => $routeItem->method() === $route->method() && $routeItem->uri() === $route->uri()
+            fn($routeItem) => $this->isRequestedRoute($routeItem, $route)
         );
 
         if (empty($filteredRoute)) {
@@ -38,5 +39,26 @@ class RouteCollection implements IRouteCollection
     public function routes(): array
     {
         return $this->routes;
+    }
+
+    public function addMiddleware(RouteURI $route, string | array $middleware): void
+    {
+        $this->routes = array_map(function ($routeItem) use ($route, $middleware) {
+            return $this->mapRouteMiddlewares($routeItem, $route, $middleware);
+        }, $this->routes());
+    }
+
+    private function mapRouteMiddlewares(RouteURI $routeItem, RouteURI $route, string | array $middleware): RouteURI
+    {
+        if ($this->isRequestedRoute($routeItem, $route)) {
+            is_string($middleware) ? $routeItem->setMiddleware($middleware) : $routeItem->setMiddlewares($middleware);
+        }
+
+        return $routeItem;
+    }
+
+    private function isRequestedRoute(RouteURI $routeItem, RouteURI $route): bool
+    {
+        return $routeItem->method() === $route->method() && $routeItem->uri() === $route->uri();
     }
 }

@@ -29,9 +29,15 @@ class RouteURI
         return $this;
     }
 
-    public function setMiddleware(mixed $middleware): static
+    public function setMiddleware(string $middleware): static
     {
         $this->middlewares[] = $middleware;
+        return $this;
+    }
+
+    public function setMiddlewares(array $middlewares): static
+    {
+        $this->middlewares = $middlewares;
         return $this;
     }
 
