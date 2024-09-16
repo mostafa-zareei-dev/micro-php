@@ -1,14 +1,19 @@
 <?php
 
-function configs(string $key): array
+function configs(string $value): mixed
 {
-    $appConfigs = include ROOT_PATH . "config/app.php";
+    list($targetConfig, $key) = explode(".", $value);
+    $configs = include ROOT_PATH . "config/" . $targetConfig .".php";
 
-    if (!array_key_exists($key, $appConfigs)) {
+    if(!is_array($configs) && !isset($configs)) {
+        throw new Exception("The configs should be provided as an array.");
+    }
+
+    if (!array_key_exists($key, $configs)) {
         throw new InvalidArgumentException("undefined $key in configs array.");
     }
 
-    return $appConfigs[$key];
+    return $configs[$key];
 }
 
 function dd(mixed $value): void
