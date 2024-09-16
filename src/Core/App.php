@@ -42,9 +42,7 @@ class App
 
     private function registerServiceProviders()
     {
-        $configs = include ROOT_PATH . "config/app.php";
-
-        $providers = $configs['providers'];
+        $providers = configs('app.providers');
 
         foreach ($providers as $provider) {
             self::$container->register(new $provider());
