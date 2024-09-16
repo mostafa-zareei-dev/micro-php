@@ -18,7 +18,7 @@ class AppServiceProvider implements IServiceProvider
 
     private function bindMiddlewares(ServiceContainer $container)
     {
-        $routeMiddlewares = configs('route_middlewares');
+        $routeMiddlewares = configs('app.route_middlewares');
 
         foreach ($routeMiddlewares as $middlewareKey => $middlewareClass) {
             $container->singleton($middlewareKey, $middlewareClass);
