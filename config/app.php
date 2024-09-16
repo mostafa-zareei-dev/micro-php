@@ -3,6 +3,7 @@
 return [
     'providers' => [
         "App\Kernel\ServiceProviders\AppServiceProvider",
+        "App\Kernel\ServiceProviders\DatabaseServiceProvider",
         "App\Kernel\ServiceProviders\HttpServiceProvider",
         "App\Kernel\ServiceProviders\RouteServiceProvider",
     ],
