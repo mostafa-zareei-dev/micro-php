@@ -13,7 +13,7 @@ class RouteMiddlewarePipline
 
     public function build(array $middlewares): static
     {
-        $routeMiddlewares = configs('route_middlewares');
+        $routeMiddlewares = configs('app.route_middlewares');
 
         foreach ($middlewares as $middlewareKey) {
             if (!array_key_exists($middlewareKey, $routeMiddlewares)) {

@@ -8,6 +8,7 @@ use App\Kernel\Core\App;
 use App\Kernel\Bootstraping\Bootstrap;
 
 Bootstrap::loadFunctions();
+Bootstrap::loadEnvVariables();
 
 $app = new App();
 

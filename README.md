@@ -27,11 +27,13 @@ The framework’s directory structure is as follows:
 /routes               # Define routes (e.g., web.php)
   web.php             # Define web routes 
 /src
+  /Bootstraping       # Bootstrap class
   /Core               # Core components of the framework
   /Routing            # Routing logic
   /Container          # DI Container implementation
   /ServiceProviders   # Base ServiceProvider and abstract classes
   /Http               # Base Http classes
+  /Infrastructures    # Base Infrastructure classes
   /Controllers        # Base controllers and abstract classes
   /Middlewares        # Base middlewares and abstract classes
   /Models             # Base models and abstract classes
