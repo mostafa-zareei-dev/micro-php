@@ -2,9 +2,13 @@
 
 namespace App\Kernel\Core;
 
+use App\Kernel\Commands\MakeMigrationCommand;
+use App\Kernel\Commands\RollbackMigrationCommand;
+use App\Kernel\Commands\RunMigrateCommand;
 use App\Kernel\Container\ServiceContainer;
 use App\Kernel\Http\Request;
 use App\Kernel\Routing\Router;
+use Symfony\Component\Console\Application;
 
 class App
 {
@@ -38,6 +42,15 @@ class App
         $request = self::$container->resolve(Request::class);
 
         $router->routing($request);
+    }
+
+    public function runMicroCli()
+    {
+        $application = new Application();
+        $application->add(new MakeMigrationCommand());
+        $application->add(new RunMigrateCommand());
+        $application->add(new RollbackMigrationCommand());
+        $application->run();
     }
 
     private function registerServiceProviders()
