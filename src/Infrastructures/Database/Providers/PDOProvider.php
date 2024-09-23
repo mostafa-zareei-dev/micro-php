@@ -20,9 +20,17 @@ class PDOProvider extends DatabaseProvider
     public function all(array $columns = ["*"])
     {
         $columns = implode(", ", $columns);
-        
+
         $this->query = "SELECT $columns FROM $this->tableName";
         return $this->query($this->query)->statement->fetchAll();
+    }
+
+    public function find(array $columns = ["*"], array $params = [], string $where = ''): array | false
+    {
+        $columns = implode(", ", $columns);
+
+        $this->query = "SELECT $columns FROM $this->tableName WHERE $where";
+        return $this->query($this->query, $params)->statement->fetch();
     }
 
     public function update(array $params = [], string $where = "")
@@ -45,10 +53,10 @@ class PDOProvider extends DatabaseProvider
         return $this->query($this->query, $data)->rowCount();
     }
 
-    public function delete(string $condition = "")
+    public function delete(array $params = [], string $condition = ""): int
     {
         $sql = "DELETE FROM $this->tableName WHERE $condition";
-        return $this->query($sql)->rowCount();
+        return $this->query($sql, $params)->rowCount();
     }
 
     private function rowCount(): int
