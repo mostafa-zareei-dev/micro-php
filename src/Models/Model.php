@@ -33,8 +33,8 @@ abstract class Model
         return $this->dbProvider->table($this->tableName)->update($data, $condition);
     }
 
-    public function delete(string $condition)
+    public function delete(array $params, string $condition)
     {
-        return $this->dbProvider->table($this->tableName)->delete($condition);
+        return $this->dbProvider->table($this->tableName)->delete($params, $condition);
     }
 }
